@@ -37,5 +37,7 @@ if __name__ == "__main__":
     print(result.fit_report())
     plt.plot(times, rhos, label='data')
     plt.plot(times, result.best_fit, '-', label='best fit')
+    plt.xlabel("Time (s)")
+    plt.ylabel("Position (px)")
     plt.legend()
     plt.show()

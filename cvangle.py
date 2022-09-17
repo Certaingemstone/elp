@@ -11,7 +11,6 @@ canny_thresh1 = 100
 canny_thresh2 = 300
 hough_thresh = 400
 angular_res = 0.001 # about 0.05 degree resolution
-expected_lines = 2 # left and right edge of the paracord
 
 # Data
 times = []
@@ -55,7 +54,7 @@ while capture.isOpened():
             pt2 = (int(x0 - 1000*(-b)), int(y0 - 1000*(a)))
             cv2.line(frame, pt1, pt2, (0,0,255), 3, cv2.LINE_AA)
 
-    # split the lines between left and right side of pendulum by clustering on rho:
+    # cluster the lines between left and right side of pendulum by rho:
     rho_temp = np.array(rho_temp)
     midpt = 0.5 * (np.max(rho_temp) - np.min(rho_temp)) + np.min(rho_temp)
     mask = rho_temp > midpt
