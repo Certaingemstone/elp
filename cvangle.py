@@ -5,11 +5,13 @@ import csv
 np.seterr(all='raise')
 
 display = False
-outfile = r"C:\Users\jade2\Downloads\MIT\FA2022\JLab\pendulum\C0424.csv"
-filename = r"C:\Users\jade2\Downloads\MIT\FA2022\JLab\pendulum\C0424.MP4"
-canny_thresh1 = 100
-canny_thresh2 = 300
-hough_thresh = 400
+outfile = r"C:\Users\jade2\Downloads\MIT\FA2022\JLab\pendulum\Kiran.csv"
+filename = r"C:\Users\jade2\Downloads\MIT\FA2022\JLab\pendulum\Kiran.MP4"
+# Tune these thresholds until around 4-12 lines are detected per frame
+# use display = True to verify that they are the correct lines.
+canny_thresh1 = 80
+canny_thresh2 = 200
+hough_thresh = 200
 angular_res = 0.001 # about 0.05 degree resolution
 
 # Data
@@ -26,8 +28,10 @@ idx = 0
 frame_time = 1 / fr
 
 while capture.isOpened():
+#for i in range(10):
     # get a frame
     ret, frame = capture.read()
+    # rotate lines to be horizontal, to work well with cv2 line representation
     frame = cv2.rotate(frame, cv2.ROTATE_90_CLOCKWISE)
     if not ret:
         print(f"Frame stream end. Exiting.")
@@ -70,7 +74,7 @@ while capture.isOpened():
     times.append(frame_time * idx)
     
     # show the stuff
-    print(f"Frame {idx}, {final_rho}")
+    print(f"Frame {idx}, {final_rho}, {len(lines)}")
     if display:
         imS = cv2.resize(frame, (480, 640)) 
         cv2.imshow("Lines", imS)

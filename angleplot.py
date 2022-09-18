@@ -4,18 +4,19 @@ import lmfit
 from lmfit import Model, Parameters
 import csv
 
-filename = r"C:\Users\jade2\Downloads\MIT\FA2022\JLab\pendulum\C0424.csv"
+filename = r"C:\Users\jade2\Downloads\MIT\FA2022\JLab\pendulum\Kiran.csv"
 
 def damped_sine(t, a, w, b, phi, c):
     return (a*np.sin(w*t + phi))*np.exp(-b*t) + c
 
 def fit_decay_sine(x, y):
     params = Parameters()
-    params.add('a', value=500, min=0)
-    params.add('w', value=1.5)
-    params.add('b', value=0.01)
+    # Tune these to your observed data
+    params.add('a', value=700, min=0)
+    params.add('w', value=0.9, min=0)
+    params.add('b', value=0.001, min=0)
     params.add('phi', value=0)
-    params.add('c', value=0)
+    params.add('c', value=935)
     model = Model(damped_sine)
     out = model.fit(y, params, t=x)
     return out
